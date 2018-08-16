@@ -1,0 +1,51 @@
+<link rel="import" href="/bower_components/polymer/polymer-element.html">
+<link rel="import" href="/bower_components/polymer/lib/elements/dom-if.html">
+<link rel="import" href="poke-list.html">
+<dom-module id="poke-app">
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
+        </style>
+            <h1>Official Pokedex App</h1>
+            <template is="dom-if" if="{{loader}}">
+                <h2>Loading...</h2>
+            </template>
+            <template is="dom-if" if="{{!loader}}">
+                <poke-list></poke-list>
+            </template>
+        </template>
+        <script>
+            class PokeApp extends Polymer.Element {
+                static get properties () {
+                    return {
+                        loader: {
+                            type: Boolean,
+                            value: true, 
+                            readOnly: false,
+                            notify: true,
+                            observer: '_changedValue'
+                        }
+                    }
+                }
+
+
+      ready () {
+        super.ready()
+        setTimeout(() => {
+          this.set('loader', false)
+        }, 3000);
+      }
+
+      _changedValue () {
+        console.log('Loading finished', this.loader)
+      }
+
+    static get is () {
+        return 'poke-app'
+        }
+    }
+    customElements.define(PokeApp.is, PokeApp)
+    </script>
+</dom-module>

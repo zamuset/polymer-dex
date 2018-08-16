@@ -1,0 +1,47 @@
+<link rel="import" href="/bower_components/polymer/polymer-element.html">
+<link rel="import" href="/bower_components/polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="poke-card.html">
+<dom-module id="poke-list">
+    <template>
+        <style>
+            :host {
+                display: block;
+            }
+        </style>
+        <h2>Official Pokedex Polymer</h2>
+        <template is="dom-repeat" items="{{pokemons}}">
+            <poke-card pokemon="[[item]]"></poke-card>
+        </template>
+    </template>
+    <script>
+        class PokeList extends Polymer.Element {
+            static get properties () {
+                return {
+                    pokemons: {
+                        type: Array,
+                        value: [
+                            {
+                                name: "Pikachu", 
+                                type: "electric",
+                                icon: "https://vignette.wikia.nocookie.net/es.pokemon/images/7/77/Pikachu.png/revision/latest?cb=20150621181250",
+                                battles: ['w', 'w', 'd', 'l'],
+                                captured: true
+                            },
+                            {
+                                name: "Pikachu2", 
+                                type: "electric",
+                                icon: "https://vignette.wikia.nocookie.net/es.pokemon/images/7/77/Pikachu.png/revision/latest?cb=20150621181250",
+                                battles: [],
+                                captured: false
+                            }
+                        ]
+                    }
+                }
+            }
+            static get is () {
+                return 'poke-list'
+            }
+        }
+        customElements.define(PokeList.is, PokeList)
+    </script>
+</dom-module>
