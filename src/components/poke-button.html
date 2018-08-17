@@ -43,12 +43,13 @@
           }
         }
       }
-      ready () {
-        super.ready()
-        setTimeout(() => {
-          this.set('pokemon.type', 'poison')
-        }, 2000);
-      }
+      //Change properties after 2 secs
+      // ready () {
+      //   super.ready()
+      //   setTimeout(() => {
+      //     this.set('pokemon.type', 'poison')
+      //   }, 2000);
+      // }
 
       _changedName () {
         console.log('Name changed', this.pokemon)
@@ -56,6 +57,10 @@
 
       static get is() {
         return 'poke-button'
+      }
+
+      _handleClick (event) {
+        console.log(event.target, this.get('pokemon.name'))
       }
     }
     customElements.define(PokeButton.is, PokeButton)

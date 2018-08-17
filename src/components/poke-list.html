@@ -9,14 +9,20 @@
             }
         </style>
         <h2>Official Pokedex Polymer</h2>
-        <template is="dom-repeat" items="{{pokemons}}">
-            <poke-card pokemon="[[item]]"></poke-card>
+        <template is="dom-repeat" items="{{pokemons}}" 
+        as="pokemon" 
+        filter="{{_pokemonFilter2(filter)}}"
+        observe="captured">
+            <poke-card pokemon="{{pokemon}}" on-click="_capture" ></poke-card>
         </template>
     </template>
     <script>
         class PokeList extends Polymer.Element {
             static get properties () {
                 return {
+                    filter: {
+                        type: String
+                    },
                     pokemons: {
                         type: Array,
                         value: [
@@ -24,12 +30,19 @@
                                 name: "Pikachu", 
                                 type: "electric",
                                 icon: "https://vignette.wikia.nocookie.net/es.pokemon/images/7/77/Pikachu.png/revision/latest?cb=20150621181250",
-                                battles: ['w', 'w', 'd', 'l'],
+                                battles: [],
+                                captured: false
+                            },
+                            {
+                                name: "Raichu",
+                                type: "electric",
+                                icon: "https://vignette.wikia.nocookie.net/es.pokemon/images/7/77/Pikachu.png/revision/latest?cb=20150621181250",
+                                battles: ['w','w', 'w'],
                                 captured: true
                             },
                             {
-                                name: "Pikachu2", 
-                                type: "electric",
+                                name: "Eve",
+                                type: "rat",
                                 icon: "https://vignette.wikia.nocookie.net/es.pokemon/images/7/77/Pikachu.png/revision/latest?cb=20150621181250",
                                 battles: [],
                                 captured: false
@@ -41,7 +54,49 @@
             static get is () {
                 return 'poke-list'
             }
-        }
+
+            _capture (event) {
+                event.model.set('pokemon.captured', true)
+                // event.model.set('selected', true)
+                // this.set('selected', true)
+            }
+
+            _pokemonFilter (filter) {
+                return function(pokemon) {
+                    if (filter.captured) {
+                        return !pokemon.captured && pokemon.name.indexOf(filter)>-1;
+                    } else {
+                        return pokemon.name.indexOf(filter) > -1
+                    }
+                }
+            }
+
+            _pokemonFilter2 (filter) {
+                console.log("poke-list", filter.search)
+                console.log("poke-list", filter.captured)
+
+                if(!filter.search && !filter.captured){
+                    return null
+                }
+                return function(pokemon){
+                    if(filter.captured){
+                        return !pokemon.captured && pokemon.name.indexOf(filter.search)>-1;
+                    }else{
+                        return pokemon.name.indexOf(filter.search)>-1;
+                    }
+                }
+            }
+
+
+
+          /*const index = event.model.index
+          const path = 'pokemons.' + index + '.captured'
+          console.log(path)
+          this.set(path, true)*/
+
+        //   console.log(pokemon)
+        //   return !pokemon.captured
+      }
         customElements.define(PokeList.is, PokeList)
     </script>
 </dom-module>

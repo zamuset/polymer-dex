@@ -10,8 +10,8 @@
       }
       .container {
         background-color: bisque;
-        max-width: 360px;
-        min-height: 360px;
+        max-width: 160px;
+        min-height: 160px;
         position: relative;
       }
       poke-button {
@@ -31,11 +31,11 @@
       <poke-label name="[[pokemon.name]]"></poke-label>
     </div>
     <template is="dom-if" if="{{pokemon.captured}}">
-        <span>[[winBattles]]</span>
-      </template>
-      <template is="dom-if" if="{{!pokemon.captured}}">
-          <span>Wild Pokemon</span>
-        </template>
+      <span>[[winBattles]]</span>
+    </template>
+    <template is="dom-if" if="{{!pokemon.captured}}">
+      <span>Wild Pokemon</span>
+    </template>
     </template>
   </template>
   <script>

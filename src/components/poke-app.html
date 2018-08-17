@@ -1,5 +1,6 @@
 <link rel="import" href="/bower_components/polymer/polymer-element.html">
 <link rel="import" href="/bower_components/polymer/lib/elements/dom-if.html">
+<link rel="import" href="poke-search.html">
 <link rel="import" href="poke-list.html">
 <dom-module id="poke-app">
     <template>
@@ -9,42 +10,46 @@
             }
         </style>
             <h1>Official Pokedex App</h1>
-            <template is="dom-if" if="{{loader}}">
-                <h2>Loading...</h2>
-            </template>
-            <template is="dom-if" if="{{!loader}}">
-                <poke-list></poke-list>
-            </template>
+            <poke-search on-search="_search"></poke-search>
+            <poke-list filter="[[search]]"></poke-list>
+            
         </template>
         <script>
             class PokeApp extends Polymer.Element {
+                static get is () {
+                    return 'poke-app'
+                }
                 static get properties () {
                     return {
+                        search: {
+                            type: Object,
+                            notify: true
+                        },
                         loader: {
                             type: Boolean,
                             value: true, 
-                            readOnly: false,
                             notify: true,
                             observer: '_changedValue'
                         }
                     }
                 }
 
+                _search(event) {
+                    event.stopPropagation();
+                    console.log("poke-app ",event.detail)
+                    this.set('search', event.detail)
+                }
 
-      ready () {
-        super.ready()
-        setTimeout(() => {
-          this.set('loader', false)
-        }, 3000);
-      }
+                ready () {
+                    super.ready()
+                    setTimeout(() => {
+                        this.set('loader', false)
+                    }, 1000);
+                }
 
-      _changedValue () {
-        console.log('Loading finished', this.loader)
-      }
-
-    static get is () {
-        return 'poke-app'
-        }
+                _changedValue () {
+                    //console.log('Loading finished', this.loader)
+                }    
     }
     customElements.define(PokeApp.is, PokeApp)
     </script>
