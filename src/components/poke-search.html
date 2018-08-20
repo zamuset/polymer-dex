@@ -40,7 +40,7 @@
       _sendEvent () {
         const newEvent = new CustomEvent('search', {
           detail: {
-            search: this.queryName, 
+            search: this.queryName.toLowerCase(), 
             captured: this.isCaptured
           }
         })
