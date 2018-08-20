@@ -11,7 +11,7 @@
         <h2>Official Pokedex Polymer</h2>
         <template is="dom-repeat" items="{{pokemons}}" 
         as="pokemon" 
-        filter="{{_pokemonFilter2(filter)}}"
+        filter="{{_pokemonFilter(filter)}}"
         observe="captured">
             <poke-card pokemon="{{pokemon}}" on-click="_capture" ></poke-card>
         </template>
@@ -27,21 +27,21 @@
                         type: Array,
                         value: [
                             {
-                                name: "Pikachu", 
+                                name: "pikachu", 
                                 type: "electric",
                                 icon: "https://vignette.wikia.nocookie.net/es.pokemon/images/7/77/Pikachu.png/revision/latest?cb=20150621181250",
                                 battles: [],
                                 captured: false
                             },
                             {
-                                name: "Raichu",
+                                name: "raichu",
                                 type: "electric",
                                 icon: "https://vignette.wikia.nocookie.net/es.pokemon/images/7/77/Pikachu.png/revision/latest?cb=20150621181250",
                                 battles: ['w','w', 'w'],
                                 captured: true
                             },
                             {
-                                name: "Eve",
+                                name: "eve",
                                 type: "rat",
                                 icon: "https://vignette.wikia.nocookie.net/es.pokemon/images/7/77/Pikachu.png/revision/latest?cb=20150621181250",
                                 battles: [],
@@ -57,21 +57,9 @@
 
             _capture (event) {
                 event.model.set('pokemon.captured', true)
-                // event.model.set('selected', true)
-                // this.set('selected', true)
             }
 
             _pokemonFilter (filter) {
-                return function(pokemon) {
-                    if (filter.captured) {
-                        return !pokemon.captured && pokemon.name.indexOf(filter)>-1;
-                    } else {
-                        return pokemon.name.indexOf(filter) > -1
-                    }
-                }
-            }
-
-            _pokemonFilter2 (filter) {
                 console.log("poke-list", filter.search)
                 console.log("poke-list", filter.captured)
 
@@ -87,7 +75,15 @@
                 }
             }
 
-
+            _pokemonFilter2 (filter) {
+                return function(pokemon) {
+                    if (filter.captured) {
+                        return !pokemon.captured && pokemon.name.indexOf(filter)>-1;
+                    } else {
+                        return pokemon.name.indexOf(filter) > -1
+                    }
+                }
+            }
 
           /*const index = event.model.index
           const path = 'pokemons.' + index + '.captured'
