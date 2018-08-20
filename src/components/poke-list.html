@@ -13,7 +13,7 @@
         as="pokemon" 
         filter="{{_pokemonFilter(filter)}}"
         observe="captured">
-            <poke-card pokemon="{{pokemon}}" on-click="_capture" ></poke-card>
+            <poke-card pokemon="{{pokemon}}" on-click="_capture"></poke-card>
         </template>
     </template>
     <script>
@@ -68,7 +68,7 @@
                 }
                 return function(pokemon){
                     if(filter.captured){
-                        return !pokemon.captured && pokemon.name.indexOf(filter.search)>-1;
+                        return pokemon.captured && pokemon.name.indexOf(filter.search)>-1;
                     }else{
                         return pokemon.name.indexOf(filter.search)>-1;
                     }
