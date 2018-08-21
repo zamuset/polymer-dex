@@ -3,7 +3,7 @@
   <template>
     <style>
       :host {
-        display: block;
+        display: inline-block;
       }
       .poke-container {
         border: none;
@@ -26,11 +26,11 @@
       .electric {
         background-color: yellow;
       }
-
+      
     </style>
-     <button class$="poke-container [[pokemon.type]]">
-        <img class="poke-avatar" src="[[pokemon.icon]]" alt="[[pokemon.name]]" >
-      </button>
+    <button class$="poke-container [[pokemon.type]]">
+      <img class="poke-avatar" src="[[pokemon.icon]]" alt="[[pokemon.name]]" >
+    </button>
   </template>
   <script>
     class PokeButton extends Polymer.Element {
@@ -45,24 +45,24 @@
       }
       //Change properties after 2 secs
       // ready () {
-      //   super.ready()
-      //   setTimeout(() => {
-      //     this.set('pokemon.type', 'poison')
-      //   }, 2000);
-      // }
-
-      _changedName () {
-        console.log('Name changed', this.pokemon)
-      }
-
-      static get is() {
-        return 'poke-button'
-      }
-
-      _handleClick (event) {
-        console.log(event.target, this.get('pokemon.name'))
-      }
-    }
-    customElements.define(PokeButton.is, PokeButton)
-  </script>
-</dom-module>
+        //   super.ready()
+        //   setTimeout(() => {
+          //     this.set('pokemon.type', 'poison')
+          //   }, 2000);
+          // }
+          
+          _changedName () {
+            console.log('Name changed', this.pokemon)
+          }
+          
+          static get is() {
+            return 'poke-button'
+          }
+          
+          _handleClick (event) {
+            console.log(event.target, this.get('pokemon.name'))
+          }
+        }
+        customElements.define(PokeButton.is, PokeButton)
+      </script>
+    </dom-module>

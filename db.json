@@ -1,5 +1,5 @@
 {
-    "pokemons": [
+    "kanto": [
         {
             "id": 1,
             "name": "pikachu", 
@@ -13,8 +13,8 @@
             "name": "raichu",
             "type": "electric",
             "icon": "https://vignette.wikia.nocookie.net/es.pokemon/images/7/77/Pikachu.png/revision/latest?cb=20150621181250",
-            "battles": ["w", "w", "w"],
-            "captured": true
+            "battles": [],
+            "captured": false
         },
         {
             "id": 3,

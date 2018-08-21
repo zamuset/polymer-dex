@@ -1,11 +1,11 @@
 <link rel="import" href="/bower_components/polymer/polymer-element.html">
 <dom-module id="poke-search">
   <template>
-      <style>
-          :host{
-              display: block;
-          }
-      </style> 
+    <style>
+      :host{
+        display: block;
+      }
+    </style> 
     <input id="pokemon-name" placeholder="pikachu" on-input="_changeSearch"><br>
     <input type="checkbox" id="pokemon-status" on-change="_changeCheck">Captured<br>
   </template>
@@ -27,16 +27,16 @@
         }
       }
       
-       _changeSearch (event) {
+      _changeSearch (event) {
         this.queryName = event.target.value
         this._sendEvent()
       }
-
+      
       _changeCheck (event) {
         this.isCaptured = event.target.checked
         this._sendEvent()
       }
-
+      
       _sendEvent () {
         const newEvent = new CustomEvent('search', {
           detail: {

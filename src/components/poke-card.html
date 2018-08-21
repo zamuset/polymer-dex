@@ -6,7 +6,7 @@
   <template>
     <style>
       :host {
-        display: block;
+        display: inline-block;
         text-transform: capitalize;
       }
       .container {
@@ -37,32 +37,32 @@
     <template is="dom-if" if="{{!pokemon.captured}}">
       <span>Wild Pokemon</span>
     </template>
-    </template>
   </template>
-  <script>
-    class PokeCard extends Polymer.Element {
-      static get properties() {
-        return {
-          pokemon: {
-            type: Object,
-            notify: true
-          },
-          winBattles: {
-            type: String,
-            computed: "_calculatesWins(pokemon)"
-          }
+</template>
+<script>
+  class PokeCard extends Polymer.Element {
+    static get properties() {
+      return {
+        pokemon: {
+          type: Object,
+          notify: true
+        },
+        winBattles: {
+          type: String,
+          computed: "_calculatesWins(pokemon)"
         }
       }
-      _calculatesWins (pokemon) {
-        const battles = pokemon.battles
-        const winBattles = battles.filter((result) => result === 'w')
-        return winBattles.length + "/" + battles.length
-      }
-
-      static get is() {
-        return 'poke-card'
-      }
     }
-    customElements.define(PokeCard.is, PokeCard);
-  </script>
+    _calculatesWins (pokemon) {
+      const battles = pokemon.battles
+      const winBattles = battles.filter((result) => result === 'w')
+      return winBattles.length + "/" + battles.length
+    }
+    
+    static get is() {
+      return 'poke-card'
+    }
+  }
+  customElements.define(PokeCard.is, PokeCard);
+</script>
 </dom-module>

@@ -1,7 +1,7 @@
 <link rel="import" href="/bower_components/polymer/polymer-element.html">
 <link rel="import" href="/bower_components/polymer/lib/elements/dom-if.html">
 <link rel="import" href="poke-search.html">
-<link rel="import" href="poke-list.html">
+<link rel="import" href="poke-region.html">
 <dom-module id="poke-app">
     <template>
         <style>
@@ -13,47 +13,46 @@
                 font-style: italic;
             }
         </style>
-            <h1>Official Pokedex App</h1>
-            <poke-search on-search="_search"></poke-search>
-            <poke-list filter="[[search]]">
-                <h2>Official Pokedex Polymer</h2></poke-list>
-        </template>
-        <script>
-            class PokeApp extends Polymer.Element {
-                static get is () {
-                    return 'poke-app'
-                }
-                static get properties () {
-                    return {
-                        search: {
-                            type: Object,
-                            notify: true
-                        },
-                        loader: {
-                            type: Boolean,
-                            value: true, 
-                            notify: true,
-                            observer: '_changedValue'
-                        }
+        <h1>Official Pokedex App</h1>
+        <poke-search on-search="_search"></poke-search>
+        <poke-region filter="[[search]]" base-url="http://localhost:3000" region="kanto"></poke-region>
+    </template>
+    <script>
+        class PokeApp extends Polymer.Element {
+            static get is () {
+                return 'poke-app'
+            }
+            static get properties () {
+                return {
+                    search: {
+                        type: Object,
+                        notify: true
+                    },
+                    loader: {
+                        type: Boolean,
+                        value: true, 
+                        notify: true,
+                        observer: '_changedValue'
                     }
                 }
-
-                _search(event) {
-                    event.stopPropagation();
-                    this.set('search', event.detail)
-                }
-
-                ready () {
-                    super.ready()
-                    setTimeout(() => {
-                        this.set('loader', false)
-                    }, 1000);
-                }
-
-                _changedValue () {
-                    //console.log('Loading finished', this.loader)
-                }    
-    }
-    customElements.define(PokeApp.is, PokeApp)
+            }
+            
+            _search(event) {
+                event.stopPropagation();
+                this.set('search', event.detail)
+            }
+            
+            ready () {
+                super.ready()
+                setTimeout(() => {
+                    this.set('loader', false)
+                }, 1000);
+            }
+            
+            _changedValue () {
+                //console.log('Loading finished', this.loader)
+            }    
+        }
+        customElements.define(PokeApp.is, PokeApp)
     </script>
 </dom-module>
