@@ -24,5 +24,31 @@
             "battles": [],
             "captured": false
         }
+    ],
+    "other": [
+        {
+            "id": 1,
+            "name": "pikachu", 
+            "type": "electric",
+            "icon": "https://vignette.wikia.nocookie.net/es.pokemon/images/7/77/Pikachu.png/revision/latest?cb=20150621181250",
+            "battles": [],
+            "captured": false
+        },
+        {
+            "id": 2,
+            "name": "raichu",
+            "type": "electric",
+            "icon": "https://vignette.wikia.nocookie.net/es.pokemon/images/7/77/Pikachu.png/revision/latest?cb=20150621181250",
+            "battles": [],
+            "captured": false
+        },
+        {
+            "id": 3,
+            "name": "eve",
+            "type": "rat",
+            "icon": "https://vignette.wikia.nocookie.net/es.pokemon/images/7/77/Pikachu.png/revision/latest?cb=20150621181250",
+            "battles": [],
+            "captured": false
+        }
     ]
 }

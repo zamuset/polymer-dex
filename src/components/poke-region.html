@@ -11,7 +11,7 @@
     <iron-ajax auto url="[[baseUrl]]/[[region]]" on-response="_onLoadPokemons" handle-as="json" on-error="_handleError">
     </iron-ajax>
     <poke-list filter="[[filter]]" pokemons="{{pokemons}}" on-pokemons-changed="_pokemonChanged">
-      <h2 slot="title" class="title">Official Pokedex Polymer</h2>
+      <h2 slot="title" class="title">Official Pokedex Polymer - Region [[region]]</h2>
     </poke-list>
   </template>
   <script>
