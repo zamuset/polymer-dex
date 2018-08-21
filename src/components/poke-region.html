@@ -10,7 +10,7 @@
     </style>
     <iron-ajax auto url="[[baseUrl]]/[[region]]" on-response="_onLoadPokemons" handle-as="json" on-error="_handleError">
     </iron-ajax>
-    <poke-list filter="[[filter]]" pokemons="{{pokemons}}" on-pokemons-changed="_pokemonChanged">
+    <poke-list on-capture="_capture" filter="[[filter]]" pokemons="[[pokemons]]" on-pokemon-click="_capturePokemon">
       <h2 slot="title" class="title">Official Pokedex Polymer - Region [[region]]</h2>
     </poke-list>
   </template>
@@ -33,14 +33,17 @@
           },
           pokemons: {
             type: Array,
-            value: [],
+            value: function () {
+              return []
+            },
             readOnly: true
           }
         }
       }
-
-      _pokemonChanged(event) {
-        console.log(event)
+      _capturePokemon(event) {
+        console.log("region", event.detail)
+        const model = event.detail
+        model.set('pokemon.captured', true)
       }
       _onLoadPokemons(event) {
         console.log('_onLoadPokemons', event.detail.response)
