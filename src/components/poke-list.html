@@ -1,5 +1,6 @@
 <link rel="import" href="/bower_components/polymer/polymer-element.html">
 <link rel="import" href="/bower_components/polymer/lib/elements/dom-repeat.html">
+<link rel="import" href="/bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="poke-card.html">
 <dom-module id="poke-list">
     <template>
@@ -8,16 +9,27 @@
                 display: block;
             }
         </style>
-        <h2>Official Pokedex Polymer</h2>
+        <iron-ajax
+            auto
+            url="http://localhost:3000/pokemons"
+            handle-as="json"
+            on-response="_onLoadPokemnons"
+            on-error="_handleError">
+        </iron-ajax>
+        <slot name="title" class="title" ></slot>
         <template is="dom-repeat" items="{{pokemons}}" 
         as="pokemon" 
         filter="{{_pokemonFilter(filter)}}"
         observe="captured">
-            <poke-card pokemon="{{pokemon}}" on-click="_capture"></poke-card>
+            <poke-card pokemon="{{pokemon}}" on-click="_capture" on-pokemons-changed="_pokemonsChanged"></poke-card>
         </template>
     </template>
     <script>
         class PokeList extends Polymer.Element {
+            constructor() {
+                super()
+                this.addEventListener("pokemons-changed", this._pokemonsChanged)
+            }
             static get properties () {
                 return {
                     filter: {
@@ -25,29 +37,9 @@
                     },
                     pokemons: {
                         type: Array,
-                        value: [
-                            {
-                                name: "pikachu", 
-                                type: "electric",
-                                icon: "https://vignette.wikia.nocookie.net/es.pokemon/images/7/77/Pikachu.png/revision/latest?cb=20150621181250",
-                                battles: [],
-                                captured: false
-                            },
-                            {
-                                name: "raichu",
-                                type: "electric",
-                                icon: "https://vignette.wikia.nocookie.net/es.pokemon/images/7/77/Pikachu.png/revision/latest?cb=20150621181250",
-                                battles: ['w','w', 'w'],
-                                captured: true
-                            },
-                            {
-                                name: "eve",
-                                type: "rat",
-                                icon: "https://vignette.wikia.nocookie.net/es.pokemon/images/7/77/Pikachu.png/revision/latest?cb=20150621181250",
-                                battles: [],
-                                captured: false
-                            }
-                        ]
+                        value: [],
+                        readOnly: true,
+                        notify: true
                     }
                 }
             }
@@ -58,6 +50,24 @@
             _capture (event) {
                 event.model.set('pokemon.captured', true)
             }
+            _onLoadPokemnons(event){
+                this._setPokemons(event.detail.response)
+            }
+            _handleError(event){
+                console.error("Error", event.detail)
+            }
+            _pokemonsChanged(event) {
+                console.log(event)
+            }
+           /* _loadPokemnons() {
+                fetch("http://localhost:3000/pokemons")
+                    .then((response)=> response.json())
+                    .then((response) => {
+                        this.pokemons = response
+                    })
+                    .catch(console.error)
+
+            }*/
 
             _pokemonFilter (filter) {
                 console.log("poke-list", filter.search)

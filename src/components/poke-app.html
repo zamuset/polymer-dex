@@ -8,10 +8,15 @@
             :host {
                 display: block;
             }
+            ::slotted(.title) {
+                font-size: 1.3rem;
+                font-style: italic;
+            }
         </style>
             <h1>Official Pokedex App</h1>
             <poke-search on-search="_search"></poke-search>
-            <poke-list filter="[[search]]"></poke-list>
+            <poke-list filter="[[search]]">
+                <h2>Official Pokedex Polymer</h2></poke-list>
         </template>
         <script>
             class PokeApp extends Polymer.Element {
