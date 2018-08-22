@@ -1,0 +1,62 @@
+<link rel="import" href="/bower_components/polymer/polymer-element.html">
+<link rel="import" href="/bower_components/iron-form/iron-form.html">
+<link rel="import" href="/bower_components/paper-input/paper-input.html">
+<link rel="import" href="/bower_components/paper-checkbox/paper-checkbox.html">
+<link rel="import" href="/bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
+<link rel="import" href="/bower_components/neon-animation/web-animations.html">
+<link rel="import" href="/bower_components/paper-listbox/paper-listbox.html">
+<link rel="import" href="/bower_components/paper-item/paper-item.html">
+<link rel="import" href="/bower_components/paper-button/paper-button.html">
+<link rel="import" href="poke-container.html">
+<dom-module id="poke-form">
+  <template>
+    <style>
+      paper-button {
+        background-color: palegreen;
+      }
+    </style>
+    <poke-container>
+      <iron-form id="pokeForm">
+        <paper-input name="poke-id" value="1" hidden></paper-input>
+        <paper-input label="Pokemon name" name="poke-name" required></paper-input>
+        <paper-input label="Url imagen" name="poke-url" required></paper-input>
+        <paper-dropdown-menu label="Pokemon type" name="poke-type" required>
+          <paper-listbox class="dropdown-content" slot="dropdown-content">
+            <paper-item value="electric">electric</paper-item>
+            <paper-item value="plant">plant</paper-item>
+            <paper-item value="poison">poison</paper-item>
+          </paper-listbox>
+        </paper-dropdown-menu>
+        <div>
+          <paper-button type="submit" raised on-click="_submit">
+            <iron-icon icon="save"></iron-icon>Agregar
+          </paper-button>
+        </div>
+      </iron-form>
+    </poke-container>
+  </template>
+  <script>
+    class PokeForm extends Polymer.Element {
+      static get is() {
+        return "poke-form"
+      }
+      static get properties() {
+        return {
+        }
+      }
+      _submit(event) {
+        event.preventDefault()
+        const pokemon = this.$.pokeForm.serializeForm()
+        pokemon.captured = false
+        pokemon.battles = []
+
+        console.log("form", JSON.stringify(pokemon))
+
+        // const form = event.target
+        // const poke2 = form.serializeForm()
+        // console.log("target", poke2)
+      }
+    }
+    customElements.define(PokeForm.is, PokeForm)
+  </script>
+</dom-module>
