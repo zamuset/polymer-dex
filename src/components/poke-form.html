@@ -58,7 +58,6 @@
               <paper-item>kanto</paper-item>
             </paper-listbox>
           </paper-dropdown-menu>
-          <br>
           <paper-dropdown-menu label="Pokemon type" name="type" required>
             <paper-listbox class="dropdown-content" slot="dropdown-content" selected="0">
               <paper-item value="electric">electric</paper-item>
@@ -66,13 +65,14 @@
               <paper-item value="poison">poison</paper-item>
             </paper-listbox>
           </paper-dropdown-menu>
-          <br>
-            <paper-button class="save" type="submit" raised on-click="_submitForm">
-              <iron-icon icon="save"></iron-icon>Guardar
-            </paper-button>
-            <paper-button class="reset" type="submit" raised on-click="_resetForm">
-              <iron-icon icon="save"></iron-icon>Borrar
-            </paper-button>
+          <div>
+              <paper-button class="save" type="submit" raised on-click="_submitForm">
+                <iron-icon icon="save"></iron-icon>Guardar
+              </paper-button>
+              <paper-button class="reset" type="submit" raised on-click="_resetForm">
+                <iron-icon icon="save"></iron-icon>Borrar
+              </paper-button>
+          </div>
         </form>
       </iron-form>
     </poke-container>
@@ -152,8 +152,9 @@
         const region = pokemon.region
         delete pokemon.region
         const url = 'http://localhost:3000/' + region
+        console.log("url", url)
         const config = {
-          method: 'UPDATE',
+          method: 'POST',
           body: JSON.stringify(pokemon),
           headers: {
             'Content-Type': 'application/json'

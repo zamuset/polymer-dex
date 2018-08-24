@@ -1,52 +1,12 @@
 {
   "kanto": [
     {
-      "id": 1,
-      "name": "pikachu",
+      "name": "feraligatr",
+      "icon": "https://img.pokemondb.net/artwork/vector/large/feraligatr.png",
       "type": "electric",
-      "icon": "https://vignette.wikia.nocookie.net/es.pokemon/images/7/77/Pikachu.png/revision/latest?cb=20150621181250",
-      "battles": [],
-      "captured": false
-    },
-    {
-      "id": 2,
-      "name": "raichu",
-      "type": "electric",
-      "icon": "https://vignette.wikia.nocookie.net/es.pokemon/images/7/77/Pikachu.png/revision/latest?cb=20150621181250",
-      "battles": [],
-      "captured": false
-    },
-    {
-      "id": 3,
-      "name": "eve",
-      "type": "rat",
-      "icon": "https://vignette.wikia.nocookie.net/es.pokemon/images/7/77/Pikachu.png/revision/latest?cb=20150621181250",
-      "battles": [],
-      "captured": false
-    },
-    {
-      "name": "aerodactyl",
-      "url": "https://img.pokemondb.net/artwork/large/aerodactyl.jpg",
-      "type": "plant",
       "captured": false,
       "battles": [],
-      "id": 4
-    },
-    {
-      "name": "abra",
-      "url": "https://img.pokemondb.net/artwork/large/abra.jpg",
-      "type": "plant",
-      "captured": false,
-      "battles": [],
-      "id": 5
-    },
-    {
-      "name": "articuno",
-      "icon": "https://img.pokemondb.net/artwork/vector/large/articuno.png",
-      "type": "poison",
-      "captured": false,
-      "battles": [],
-      "id": 6
+      "id": 1
     }
   ],
   "kalos": [
