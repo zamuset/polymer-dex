@@ -1,4 +1,7 @@
 <link rel="import" href="/bower_components/polymer/polymer-element.html">
+<link rel="import" href="/bower_components/paper-button/paper-button.html">
+<link rel="import" href="/bower_components/iron-icons/iron-icons.html">
+<link rel="import" href="/bower_components/iron-icon/iron-icon.html">
 <dom-module id="poke-label">
   <template>
     <style type="text/css">
@@ -14,6 +17,13 @@
         padding: 0.5rem 0;
         text-align: center;
         text-transform: capitalize;
+      }
+      .button {
+        background-color: red;
+        color: white;
+        display: block;
+        text-align: center;
+        position: absolute;
       }
     </style>
     <span class="label">[[name]]</span>

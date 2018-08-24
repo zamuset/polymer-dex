@@ -14,11 +14,12 @@
         margin: 0 auto;
       }
       .poke-avatar {
-        height: auto;
+        height: 90%;
         max-width: 90%;
       }
       .plant {
         background-color: green;
+        opacity: 0.8;
       }
       .poison {
         background-color: purple;
@@ -26,10 +27,13 @@
       .electric {
         background-color: yellow;
       }
+      .fire {
+        background-color: red;
+      }
       
     </style>
     <button class$="poke-container [[pokemon.type]]">
-      <img class="poke-avatar" src="[[pokemon.icon]]" alt="[[pokemon.name]]" >
+      <img class="poke-avatar" src="[[pokemon.icon]]" onerror="this.onerror=null;this.src='https://png.icons8.com/color/1600/pokeball-2.png';" alt="[[pokemon.name]]" >
     </button>
   </template>
   <script>
@@ -50,17 +54,8 @@
           //     this.set('pokemon.type', 'poison')
           //   }, 2000);
           // }
-          
-          _changedName () {
-            console.log('Name changed', this.pokemon)
-          }
-          
           static get is() {
             return 'poke-button'
-          }
-          
-          _handleClick (event) {
-            console.log(event.target, this.get('pokemon.name'))
           }
         }
         customElements.define(PokeButton.is, PokeButton)

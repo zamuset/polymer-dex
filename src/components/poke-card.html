@@ -7,12 +7,19 @@
     <style>
       :host {
         display: inline-block;
+        background-color: wheat;
+        opacity: 0.9;
+        margin: 16px 4px auto;
       }
       .container {
         background-color: bisque;
+        border-style: solid;
+        border-color: black;
+        border-width: 2px;
         min-width: 160px;
         min-height: 160px;
         position: relative;
+        box-shadow: 0 0 32px 16px rgba(255,215,0,0.9);
       }
       poke-button {
         bottom: 0;
@@ -22,14 +29,14 @@
         position: absolute;
       }
       poke-label {
-        bottom: 0;
-        position: absolute;
+        top: 0;
+        position: relative;
       }
     </style>
     <div class="container">
       <poke-button pokemon="{{pokemon}}"></poke-button>
-      <poke-label name="[[pokemon.name]]"></poke-label>
     </div>
+      <poke-label name="[[pokemon.name]]"></poke-label>
     <template is="dom-if" if="{{pokemon.captured}}">
       <span>[[winBattles]]</span>
     </template>

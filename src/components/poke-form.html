@@ -1,5 +1,6 @@
 <link rel="import" href="/bower_components/polymer/polymer-element.html">
 <link rel="import" href="/bower_components/iron-form/iron-form.html">
+<link rel="import" href="/bower_components/iron-ajax/iron-ajax.html">
 <link rel="import" href="/bower_components/paper-input/paper-input.html">
 <link rel="import" href="/bower_components/paper-checkbox/paper-checkbox.html">
 <link rel="import" href="/bower_components/paper-dropdown-menu/paper-dropdown-menu.html">
@@ -7,61 +8,173 @@
 <link rel="import" href="/bower_components/paper-listbox/paper-listbox.html">
 <link rel="import" href="/bower_components/paper-item/paper-item.html">
 <link rel="import" href="/bower_components/paper-button/paper-button.html">
+<link rel="import" href="/bower_components/paper-autocomplete/paper-autocomplete.html">
+<link rel="import" href="/bower_components/paper-autocomplete/paper-autocomplete-suggestions.html">
 <link rel="import" href="poke-container.html">
 <dom-module id="poke-form">
   <template>
     <style>
-      paper-button {
+      :host {
+        display: block;
+        padding: 12px 12px auto;
+        height: 90%;
+      }
+
+      paper-button.save {
         background-color: palegreen;
+        margin: 2rem auto;
+      }
+
+      paper-button.reset {
+        background-color: palevioletred;
+        margin: 2rem 2rem auto;
+      }
+
+      poke-container {
+        background-color: lavender;
+        opacity: 0.7;
+        border-style: groove;
+        border-width: 10px;
+        border-color: black;
+        min-height: 80%;
+      }
+      paper-listbox {
+        padding: 90px 12px auto;
       }
     </style>
+    <iron-ajax auto url="http://localhost:3000/names" on-response="_onLoadPokemonNames" handle-as="json" on-error="_handleError"></iron-ajax>
     <poke-container>
-      <iron-form id="pokeForm">
-        <paper-input name="poke-id" value="1" type="number" hidden></paper-input>
-        <paper-input label="Pokemon name" name="poke-name" required></paper-input>
-        <paper-input label="Url imagen" name="poke-url" type="url" required></paper-input>
-        <paper-dropdown-menu label="Region" name="poke-region" required>
-          <paper-listbox class="dropdown-content" slot="dropdown-content">
-            <paper-item>kanto</paper-item>
-            <paper-item>kalos</paper-item>
-          </paper-listbox>
-        </paper-dropdown-menu>
-        <paper-dropdown-menu label="Pokemon type" name="poke-type" required>
-          <paper-listbox class="dropdown-content" slot="dropdown-content">
-            <paper-item value="electric">electric</paper-item>
-            <paper-item value="plant">plant</paper-item>
-            <paper-item value="poison">poison</paper-item>
-          </paper-listbox>
-        </paper-dropdown-menu>
-        <div>
-          <paper-button type="submit" raised on-click="_submit">
-            <iron-icon icon="save" value="agregar"></iron-icon>
-          </paper-button>
-        </div>
+      <h2>Add a new Pokemon</h2>
+      <iron-form id="pokeForm" on-iron-form-presubmit="_onSubmit">
+        <form>
+          <paper-input always-float-label label="Pokemon Id" name="id" value="[[currentPokemonId]]" type="number" disabled></paper-input>
+          <paper-input id="pokeName" label="Pokemon name" name="name" on-value-changed="_updatePokemon"></paper-input>
+          <paper-autocomplete-suggestions for="pokeName" source="[[pokeNames]]" text-property="name" value-property="url">
+          </paper-autocomplete-suggestions>
+          <paper-input label="Url imagen" name="icon" value="https://img.pokemondb.net/artwork/vector/large/[[currentPokemon]].png" type="url"></paper-input>
+          <paper-dropdown-menu label="Region" name="region" required>
+            <paper-listbox class="dropdown-content" slot="dropdown-content" selected="0">
+              <paper-item>kalos</paper-item>
+              <paper-item>kanto</paper-item>
+            </paper-listbox>
+          </paper-dropdown-menu>
+          <br>
+          <paper-dropdown-menu label="Pokemon type" name="type" required>
+            <paper-listbox class="dropdown-content" slot="dropdown-content" selected="0">
+              <paper-item value="electric">electric</paper-item>
+              <paper-item value="plant">plant</paper-item>
+              <paper-item value="poison">poison</paper-item>
+            </paper-listbox>
+          </paper-dropdown-menu>
+          <br>
+            <paper-button class="save" type="submit" raised on-click="_submitForm">
+              <iron-icon icon="save"></iron-icon>Guardar
+            </paper-button>
+            <paper-button class="reset" type="submit" raised on-click="_resetForm">
+              <iron-icon icon="save"></iron-icon>Borrar
+            </paper-button>
+        </form>
       </iron-form>
     </poke-container>
   </template>
   <script>
     class PokeForm extends Polymer.Element {
+      static ready() {
+        super.ready()
+        addEventListener('WebComponentsReady', function () {
+          // Async call needed here for IE11/Edge compatibility.
+          Polymer.Base.async(function () {
+            var autocompleteSuggestions = document.querySelector('paper-autocomplete-suggestions');
+            autocompleteSuggestions.source = this.pokeNames;
+
+            autocompleteSuggestions.addEventListener('autocomplete-selected', function (event) {
+              var paperToast = document.querySelector('paper-toast');
+              var selected = event.detail.text;
+              paperToast.text = 'Selected: ' + selected;
+              paperToast.show();
+            });
+          });
+        });
+      }
       static get is() {
         return "poke-form"
       }
       static get properties() {
         return {
+          pokeNames: {
+            type: Array,
+            value: function () {
+              return []
+            },
+            readOnly: true
+          },
+          currentPokemonId: {
+            type: String,
+            value: ""
+          },
+          currentPokemon: {
+            type: String,
+            value: ""
+          }
         }
       }
-      _submit(event) {
+      _updatePokemon(pokemon) {
+        console.log("update", pokemon.detail)
+        this.currentPokemon = pokemon.detail.value;
+        this._getPokeId(this.currentPokemon)
+      }
+      _getPokeId(pokemon) {
+        for (var i = 0; i < this.pokeNames.length; i++) {
+          if (this.pokeNames[i].name === pokemon) {
+            return this.currentPokemonId = this.pokeNames[i].id;
+          }
+        }
+      }
+      _onLoadPokemonNames(event) {
+        this._setPokeNames(event.detail.response)
+      }
+      _handleError(event) {
+        console.error("Error", event.detail)
+      }
+      _onSubmit(event) {
         event.preventDefault()
         const pokemon = this.$.pokeForm.serializeForm()
         pokemon.captured = false
         pokemon.battles = []
         console.log("form", JSON.stringify(pokemon))
+        this._savePokemon(pokemon)
 
         // const form = event.target
         // const poke2 = form.serializeForm()
         // console.log("target", poke2)
       }
-      
+      _savePokemon(pokemon) {
+        const region = pokemon.region
+        delete pokemon.region
+        const url = 'http://localhost:3000/' + region
+        const config = {
+          method: 'UPDATE',
+          body: JSON.stringify(pokemon),
+          headers: {
+            'Content-Type': 'application/json'
+          }
+        }
+        fetch(url, config)
+          .then(response => {
+            this.$.pokeForm.reset()
+            console.log(response)
+          })
+          .catch(error => {
+            console.error(error)
+          })
+      }
+      _submitForm() {
+        this.shadowRoot.querySelector('#pokeForm').submit()
+      }
+      _resetForm() {
+        this.shadowRoot.querySelector('#pokeForm').reset()
+      }
+
     }
     customElements.define(PokeForm.is, PokeForm)
   </script>

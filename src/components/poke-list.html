@@ -10,21 +10,23 @@
         display: block;
       }
       ::slotted(.title) {
-        font-size: 3 rem;
-        font-style: italic;
+        font-size: 2rem;
+        font-style: bold;
+        -webkit-text-fill-color: rgba(255,215,0,0.7); 
+        text-shadow: 2px 0px rgba(192,192,192,0.9);
       }
-
       poke-container {
         display: inline-block;
+        padding: 0px;
       }
     </style>
     <slot name="title">
-      <h2>Defatul title</h2>
+      <h2>Default title</h2>
     </slot>
     <slot></slot>
     <template is="dom-repeat" items="{{pokemons}}" as="pokemon" filter="{{_pokemonFilter(filter)}}">
       <poke-container>
-        <poke-card pokemon="{{pokemon}}" on-click="_capture"></poke-card>
+          <poke-card pokemon="{{pokemon}}" on-click="_capture"></poke-card>
       </poke-container>
     </template>
   </template>
@@ -44,7 +46,7 @@
         return 'poke-list'
       }
       _capture(event) {
-        const pokeClick = new CustomEvent('pokemon-click', {
+        const pokeClick = new CustomEvent('pokemon-capture', {
           detail: event.model
         })
         this.dispatchEvent(pokeClick)
@@ -59,7 +61,7 @@
                .catch(console.error)
        }*/
       _pokemonFilter(filter) {
-        console.log("poke-list", filter)
+        console.log("poke-filter", filter)
         return function (pokemon) {
           if (filter.captured) {
             return pokemon.captured && pokemon.name.indexOf(filter.search) > -1;
@@ -71,7 +73,7 @@
       _pokemonFilter2(filter) {
         return function (pokemon) {
           if (filter.captured) {
-            return !pokemon.captured && pokemon.name.indexOf(filter) > -1;
+            return pokemon.captured && pokemon.name.indexOf(filter) > -1;
           } else {
             return pokemon.name.indexOf(filter) > -1
           }

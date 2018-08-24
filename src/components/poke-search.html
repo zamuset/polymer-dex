@@ -11,12 +11,19 @@
       }
       paper-input {
         display: inline-block;
+        --paper-input-container-focus-color: white;
+        --paper-input-container-input-color: white;
+      }
+      paper-checkbox {
+        -webkit-text-fill-color: white;
+        --paper-checkbox-unchecked-color: white;
+        --paper-checkbox-checked-color: darkgray;
+
       }
     </style> 
     <paper-input label="Search for a pokemon" type="search" on-value-changed="_changeSearch">
-      <iron-icon icon="search" slot="prefix"></iron-icon>
-      <!-- <paper-icon-button icon="search" slot="prefix"></paper-icon-button> -->
-    </paper-input>
+      <iron-icon icon="search" slot="suffix" style="fill:white; padding: 4px 8px;" ></iron-icon>
+    </paper-input><br>
     <paper-checkbox id="pokemon-status" on-change="_changeCheck">Only Captured</paper-checkbox>
     <!-- <input id="pokemon-name" placeholder="pikachu" on-input="_changeSearch"><br> -->
     <!-- <input type="checkbox" id="pokemon-status" on-change="_changeCheck">Captured<br> -->
@@ -50,6 +57,7 @@
       }
       
       _sendEvent () {
+        console.log("search", this.queryName, this.isCaptured)
         const newEvent = new CustomEvent('search', {
           detail: {
             search: this.queryName.toLowerCase(), 
