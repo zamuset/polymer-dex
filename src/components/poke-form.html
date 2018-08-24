@@ -17,9 +17,15 @@
     </style>
     <poke-container>
       <iron-form id="pokeForm">
-        <paper-input name="poke-id" value="1" hidden></paper-input>
+        <paper-input name="poke-id" value="1" type="number" hidden></paper-input>
         <paper-input label="Pokemon name" name="poke-name" required></paper-input>
-        <paper-input label="Url imagen" name="poke-url" required></paper-input>
+        <paper-input label="Url imagen" name="poke-url" type="url" required></paper-input>
+        <paper-dropdown-menu label="Region" name="poke-region" required>
+          <paper-listbox class="dropdown-content" slot="dropdown-content">
+            <paper-item>kanto</paper-item>
+            <paper-item>kalos</paper-item>
+          </paper-listbox>
+        </paper-dropdown-menu>
         <paper-dropdown-menu label="Pokemon type" name="poke-type" required>
           <paper-listbox class="dropdown-content" slot="dropdown-content">
             <paper-item value="electric">electric</paper-item>
@@ -29,7 +35,7 @@
         </paper-dropdown-menu>
         <div>
           <paper-button type="submit" raised on-click="_submit">
-            <iron-icon icon="save"></iron-icon>Agregar
+            <iron-icon icon="save" value="agregar"></iron-icon>
           </paper-button>
         </div>
       </iron-form>
@@ -49,13 +55,13 @@
         const pokemon = this.$.pokeForm.serializeForm()
         pokemon.captured = false
         pokemon.battles = []
-
         console.log("form", JSON.stringify(pokemon))
 
         // const form = event.target
         // const poke2 = form.serializeForm()
         // console.log("target", poke2)
       }
+      
     }
     customElements.define(PokeForm.is, PokeForm)
   </script>
