@@ -11,6 +11,7 @@
         opacity: 0.9;
         margin: 16px 4px auto;
       }
+
       .container {
         background-color: bisque;
         border-style: solid;
@@ -19,8 +20,9 @@
         min-width: 160px;
         min-height: 160px;
         position: relative;
-        box-shadow: 0 0 32px 16px rgba(255,215,0,0.9);
+        box-shadow: 0 0 32px 16px rgba(255, 215, 0, 0.9);
       }
+
       poke-button {
         bottom: 0;
         left: 0;
@@ -28,6 +30,7 @@
         top: 0;
         position: absolute;
       }
+
       poke-label {
         top: 0;
         position: relative;
@@ -36,7 +39,7 @@
     <div class="container">
       <poke-button pokemon="{{pokemon}}"></poke-button>
     </div>
-      <poke-label name="[[pokemon.name]]"></poke-label>
+    <poke-label name="[[pokemon.name]]"></poke-label>
     <template is="dom-if" if="{{pokemon.captured}}">
       <span>[[winBattles]]</span>
     </template>
@@ -44,31 +47,30 @@
       <span>Wild Pokemon</span>
     </template>
   </template>
-</template>
-<script>
-  class PokeCard extends Polymer.Element {
-    static get properties() {
-      return {
-        pokemon: {
-          type: Object,
-          notify: true
-        },
-        winBattles: {
-          type: String,
-          computed: "_calculatesWins(pokemon)"
+  <script>
+    class PokeCard extends Polymer.Element {
+      static get properties() {
+        return {
+          pokemon: {
+            type: Object,
+            notify: true
+          },
+          winBattles: {
+            type: String,
+            computed: "_calculatesWins(pokemon)"
+          }
         }
       }
+      _calculatesWins(pokemon) {
+        const battles = pokemon.battles
+        const winBattles = battles.filter((result) => result === 'w')
+        return winBattles.length + "/" + battles.length
+      }
+
+      static get is() {
+        return 'poke-card'
+      }
     }
-    _calculatesWins (pokemon) {
-      const battles = pokemon.battles
-      const winBattles = battles.filter((result) => result === 'w')
-      return winBattles.length + "/" + battles.length
-    }
-    
-    static get is() {
-      return 'poke-card'
-    }
-  }
-  customElements.define(PokeCard.is, PokeCard);
-</script>
+    customElements.define(PokeCard.is, PokeCard);
+  </script>
 </dom-module>
