@@ -22,6 +22,7 @@ After all dependencies are installed you'll have to run "npm run fake:api" in on
 ## Detail by element
 
 * [poke-app.html](https://github.com/zamuset/polymer-dex/blob/master/src/components/poke-app.html)
+Custom element that contains the logic for the route in the application so the app can jump to "poke-dex-page.html", "poke-form-page.html" and "poke-region-page.html"
 
 * [poke-button.html](https://github.com/zamuset/polymer-dex/blob/master/src/components/poke-button.html)
 Custom elements that contains a simple button with a background image given by the pokemon received in "poke-list.html" component.
